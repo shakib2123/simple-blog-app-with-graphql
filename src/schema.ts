@@ -12,18 +12,19 @@ export const typeDefs = `#graphql
         name:String!,
         email:String!,
         password:String!
-        ):AuthResponse!
-
+        bio:String
+        ):AuthResponse
+ 
         signin(
         email:String!,
         password:String!
-        ):AuthResponse!
+        ):AuthResponse
     }
 
     type AuthResponse{
         success:Boolean!,
         message:String!,
-        token:String!
+        token:String
     }
 
     type Post{
