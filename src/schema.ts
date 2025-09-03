@@ -1,7 +1,7 @@
 export const typeDefs = `#graphql
 
     type Query {
-        me: User
+        me(id: ID!): User
         users: [User]
         posts: [Post]
 
@@ -12,7 +12,18 @@ export const typeDefs = `#graphql
         name:String!,
         email:String!,
         password:String!
-        ):User
+        ):AuthResponse!
+
+        signin(
+        email:String!,
+        password:String!
+        ):AuthResponse!
+    }
+
+    type AuthResponse{
+        success:Boolean!,
+        message:String!,
+        token:String!
     }
 
     type Post{
