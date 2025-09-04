@@ -32,6 +32,7 @@ export const postResolvers = {
       post: newPost,
     };
   },
+
   updatePost: async (parent: any, args: any, { prisma, userInfo }: any) => {
     if (!userInfo || !userInfo.userId) {
       return {
@@ -62,6 +63,38 @@ export const postResolvers = {
       success: true,
       message: "Post updated successfully",
       post: updatedPost,
+    };
+  },
+
+  deletePost: async (parent: any, args: any, { prisma, userInfo }: any) => {
+    if (!userInfo || !userInfo.userId) {
+      return {
+        success: false,
+        message: "Unauthorized",
+        post: null,
+      };
+    }
+
+    const validation = await checkUserAccess(
+      prisma,
+      userInfo.userId,
+      args.postId
+    );
+
+    if (validation) {
+      return validation;
+    }
+
+    const deletedPost = await prisma.post.delete({
+      where: {
+        id: parseInt(args.postId),
+      },
+    });
+
+    return {
+      success: true,
+      message: "Post deleted successfully",
+      post: deletedPost,
     };
   },
 };
