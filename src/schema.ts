@@ -9,23 +9,24 @@ export const typeDefs = `#graphql
 
     type Mutation{
         signup(
-        name:String!,
-        email:String!,
-        password:String!
-        bio:String
+            name:String!,
+            email:String!,
+            password:String!
+            bio:String
         ):AuthResponse
  
         signin(
-        email:String!,
-        password:String!
+            email:String!,
+            password:String!
         ):AuthResponse
+
+        addPost(post:PostInput!): PostResponse
+        updatePost(
+            postId:ID!,
+            post:PostInput
+        ): PostResponse
     }
 
-    type AuthResponse{
-        success:Boolean!,
-        message:String!,
-        token:String
-    }
 
     type Post{
         id: ID!
@@ -51,4 +52,20 @@ export const typeDefs = `#graphql
         user: User!
     }
 
+    type AuthResponse{
+        success:Boolean!,
+        message:String!,
+        token:String
+    }
+
+    type PostResponse{
+        success: Boolean!,
+        message:String!,
+        post:Post
+    }
+
+    input PostInput{
+        title: String,
+        content: String
+    }
 `;
